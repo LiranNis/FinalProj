@@ -22,7 +22,7 @@ int main()
 	double RobotWidth = 30, RobotHeight = 30;
 	double CMInPixel = 2.5; // Pixels in CM
 	double GridSize = 10; // Grid CM
-
+	//
 	char* ParametersFilePath = "~/Desktop/parameters.txt";
 
 	string CurrentLine;
