@@ -43,8 +43,11 @@ void ConvertMapBlackToWhiteAndWhiteToBlack(const char* filename) {
 
 	//if there's an error, display it
 	if (error)
+	{
 		std::cout << "decoder error " << error << ": "
 				<< lodepng_error_text(error) << std::endl;
+		return;
+	}
 
 	std::vector<unsigned char> navImage; //the raw pixels
 	navImage.resize(width * height * 4);
@@ -71,13 +74,16 @@ void InflateToGridMap(string filename, double InflateNumber, double PixelToCM, d
 	std::vector<unsigned char> image; //the raw pixels
 	unsigned width, height;
 	unsigned x, y;
+
 	//decode
 	unsigned error = lodepng::decode(image, width, height, filename);
 
 	//if there's an error, display it
 	if (error)
+	{
 		std::cout << "decoder error " << error << ": "
-				<< lodepng_error_text(error) << std::endl;
+				<< lodepng_error_text(error) << " file path: " << filename << std::endl;
+	}
 
 	std::vector<unsigned char> navImage; //the raw pixels
 	navImage.resize(width * height * 4);
