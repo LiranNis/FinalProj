@@ -50,5 +50,12 @@ bool Graph::isValidDir(uint x, uint y, uint direction, uint width, uint height)
 
 vector<int> Graph::getAdj(int vertex)
 {
-	return NULL;
+	vector<int> adj(this->MAX_ADJACENT);
+
+	for (uint i = 0; i < this->MAX_ADJACENT; ++i)
+	{
+		adj[i] = this->_matrix[vertex][i];
+	}
+
+	return adj;
 }
