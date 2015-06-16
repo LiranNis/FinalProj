@@ -9,6 +9,8 @@
 
 Map::Map(char* ParametersFilePath)
 {
+	// TODO: Replace atof
+
 	string CurrentLine;
 	ifstream ParametersFile;
 	ParametersFile.open(ParametersFilePath);
@@ -139,13 +141,12 @@ Map::Map(char* ParametersFilePath)
 
 vector<unsigned char> Map::GetInflatedMap()
 {
-	int InflateNumber = RobotWidth / 2;
+	unsigned int InflateNumber = RobotWidth / 2;
 	std::vector<unsigned char> image; //the raw pixels
-	unsigned width, height;
-	unsigned x, y;
+	unsigned int width, height, x, y;
 
 	//decode
-	unsigned error = lodepng::decode(image, width, height, MapPath);
+	unsigned int error = lodepng::decode(image, width, height, MapPath);
 
 	//if there's an error, display it
 	if (error)
@@ -179,9 +180,9 @@ vector<unsigned char> Map::GetInflatedMap()
 					|| !image[y * width * 4 + x * 4 + 1]
 					|| !image[y * width * 4 + x * 4 + 2])
 			{
-				for (unsigned nX = 0; nX < InflateNumber; nX++)
+				for (unsigned int nX = 0; nX < InflateNumber; nX++)
 				{
-					for (unsigned nY = 0; nY < InflateNumber; nY++)
+					for (unsigned int nY = 0; nY < InflateNumber; nY++)
 					{
 						unsigned Current = (y + nY) * width * 4 + (x + nX) * 4;
 						if (Current < navImage.size())
@@ -232,12 +233,10 @@ vector<unsigned char> Map::GetInflatedMap()
 void Map::InitInflatedGrid()
 {
 	std::vector<unsigned char> image; //the raw pixels
-	unsigned width, height;
-	unsigned x, y;
-	int InflateNumber = (RobotWidth / CMInPixel) / 2 + 1;
+	unsigned int width, height, x, y, InflateNumber = (RobotWidth / CMInPixel) / 2 + 1;
 
 	//decode
-	unsigned error = lodepng::decode(image, width, height, MapPath);
+	unsigned int error = lodepng::decode(image, width, height, MapPath);
 
 	//if there's an error, display it
 	if (error)
