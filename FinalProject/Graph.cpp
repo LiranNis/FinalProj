@@ -37,6 +37,12 @@ Graph::Graph(int** Grid, uint width, uint height, int obstacleIdentifier)
 				}
 			}
 		}
+
+		this->_vertexes.resize(this->_dimension)
+		for (int v = 0; v < this->_dimension; ++v)
+		{
+			this->_vertexes[v] = v;
+		}
 	}
 }
 
@@ -48,7 +54,7 @@ bool Graph::isValidDir(uint x, uint y, uint direction, uint width, uint height)
 			(y + DIR[direction][1] < height);
 }
 
-vector<int> Graph::getAdj(int vertex)
+vector<int> Graph::getAdjacent(int vertex)
 {
 	vector<int> adj(this->MAX_ADJACENT);
 
@@ -58,4 +64,9 @@ vector<int> Graph::getAdj(int vertex)
 	}
 
 	return adj;
+}
+
+vector<int> Graph::getVertexes()
+{
+	return new vector<int>(this->_vertexes);
 }

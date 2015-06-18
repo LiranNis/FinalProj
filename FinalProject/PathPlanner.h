@@ -8,7 +8,7 @@
 #ifndef PATH_PLANNER_H_
 #define PATH_PLANNER_H_
 
-#include <fstream>
+#include <list>
 #include <cstdlib>
 #include "Graph.h"
 
