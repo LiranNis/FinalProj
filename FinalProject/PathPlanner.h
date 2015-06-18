@@ -17,12 +17,15 @@ using namespace std;
 class PathPlanner
 {
 private:
-	Graph _graph;
-	void gridToGraph(int** Grid);
+	Graph* _graph;
+	int heuristicCost(int VStart, int VDest);
+	list<int> reconstructPath(int* cameFrom, int currVertex);
+	bool isInSet(list<int>* source, int target);
 
 public:
-	void pathPlannerInit(int** Grid);
-	list<int>* AStar(int StartX, int StartY, int GoalX, int GoalY);
+	void pathPlannerInit(int** Grid, uint width, uint height, int obstacleIdentifier);
+	list<int> AStar(int StartX, int StartY, int GoalX, int GoalY);
+
 };
 
 #endif

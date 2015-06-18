@@ -3,6 +3,7 @@
 Graph::Graph(int** Grid, uint width, uint height, int obstacleIdentifier)
 {
 	this->_dimension = width * height;
+	this->_widthOrigin = width;
 
 	if (width > 0 && height > 0)
 	{
@@ -32,7 +33,7 @@ Graph::Graph(int** Grid, uint width, uint height, int obstacleIdentifier)
 					if(	(this->isValidDir(x, y, currDir, width, height)) &&
 						(Grid[x + DIR[currDir][0]][y + DIR[currDir][1]] != obstacleIdentifier))
 					{
-						this->_matrix[x*y][currDir] = (x + DIR[currDir][0]) * (y + DIR[currDir][1]);
+						this->_matrix[x*y][currDir] = ((x + DIR[currDir][0]) * width) + (y + DIR[currDir][1]);
 					}
 				}
 			}
@@ -69,4 +70,20 @@ vector<int> Graph::getAdjacent(int vertex)
 vector<int>* Graph::getVertexes()
 {
 	return new vector<int>(this->_vertexes);
+}
+
+int Graph::indexToVertex(int x, int y)
+{
+	return (x * this->_widthOrigin) + y;
+}
+
+int Graph::getVertexCount()
+{
+	return this->_dimension;
+}
+
+int Graph::getManhattanDistance(int VSource, int VDest)
+{
+	return (abs((int)((VSource / this->_widthOrigin) - (VDest / this->_widthOrigin))) +
+			abs((int)((VSource % this->_widthOrigin) - (VDest % this->_widthOrigin))));
 }

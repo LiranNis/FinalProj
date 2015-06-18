@@ -3,10 +3,10 @@
 
 #include <cstdlib>
 #include <vector>
+#include <math.h>
 
 using namespace std;
 
-//#define AddAdjacent(Grid,x,y,vertex,adjIndex)  if(x > 0 && x < ) this->_matrix[vertex][adjIndex] = x*y;
 static const int EMPTY = -1,
 				 DIR[][8] = {{-1,-1}, {0, -1}, {1, -1}, {0,-1}, {0,1}, {1, -1}, {1, 0}, {1, 1}};
 class Graph
@@ -14,7 +14,8 @@ class Graph
 private:
 	int** _matrix; // Graph representation
 	vector<int> _vertexes;
-	uint _dimension; // Vertex count
+	uint _dimension, // Vertex count
+		 _widthOrigin;
 	bool isValidDir(uint x, uint y, uint direction, uint width, uint height);
 
 public:
@@ -22,6 +23,9 @@ public:
 	Graph(int** Grid, uint width, uint height, int obstacleIdentifier);
 	vector<int> getAdjacent(int vertex);
 	vector<int>* getVertexes();
+	int indexToVertex(int x, int y);
+	int getVertexCount();
+	int getManhattanDistance(int VSource, int VDest);
 };
 
 #endif
