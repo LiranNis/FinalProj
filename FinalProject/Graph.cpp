@@ -66,7 +66,7 @@ vector<int> Graph::getAdjacent(int vertex)
 	return adj;
 }
 
-vector<int> Graph::getVertexes()
+vector<int>* Graph::getVertexes()
 {
 	return new vector<int>(this->_vertexes);
 }

@@ -21,7 +21,7 @@ public:
 	static const uint MAX_ADJACENT = 8; // Graph based on grid matrix, connected to 8 adjacent at most
 	Graph(int** Grid, uint width, uint height, int obstacleIdentifier);
 	vector<int> getAdjacent(int vertex);
-	vector<int> getVertexes();
+	vector<int>* getVertexes();
 };
 
 #endif
