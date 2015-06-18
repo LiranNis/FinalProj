@@ -22,7 +22,7 @@ private:
 
 public:
 	void pathPlannerInit(int** Grid);
-	vector<int> AStar(int StartX, int StartY, int GoalX, int GoalY);
+	list<int>* AStar(int StartX, int StartY, int GoalX, int GoalY);
 };
 
 #endif

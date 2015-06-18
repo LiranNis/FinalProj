@@ -38,8 +38,8 @@ Graph::Graph(int** Grid, uint width, uint height, int obstacleIdentifier)
 			}
 		}
 
-		this->_vertexes.resize(this->_dimension)
-		for (int v = 0; v < this->_dimension; ++v)
+		this->_vertexes.resize(this->_dimension);
+		for (uint v = 0; v < this->_dimension; ++v)
 		{
 			this->_vertexes[v] = v;
 		}

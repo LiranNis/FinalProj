@@ -14,7 +14,7 @@ class Graph
 private:
 	int** _matrix; // Graph representation
 	vector<int> _vertexes;
-	unsigned int _dimension; // Vertex count
+	uint _dimension; // Vertex count
 	bool isValidDir(uint x, uint y, uint direction, uint width, uint height);
 
 public:
