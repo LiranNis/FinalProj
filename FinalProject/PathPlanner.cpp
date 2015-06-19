@@ -1,5 +1,45 @@
 #include "PathPlanner.h"
 
+//*************************************************************************
+// DEBUG SECTION
+//*************************************************************************
+
+#include<iostream>
+void openAddR(int v)
+{
+	std::cout << "Open set add : " << v << std::endl;
+}
+
+void openDelR(int v)
+{
+	std::cout << "Open set remove : " << v << std::endl;
+}
+
+void closedAddR(int v)
+{
+	std::cout << "Closed set add : " << v << std::endl;
+}
+
+void closedDelR(int v)
+{
+	std::cout << "Closed set remove : " << v << std::endl;
+}
+
+void printArray(vector<int> *array)
+{
+	vector<int>::iterator iter = array->begin();
+	cout << "{";
+	for (; iter != array->end(); ++iter) {
+		cout << " " << *iter << endl;
+
+	}
+	cout << "}";
+}
+//*************************************************************************
+// DEBUG SECTION END
+//*************************************************************************
+
+
 void PathPlanner::pathPlannerInit(int** Grid, uint width, uint height, int obstacleIdentifier)
 {
 	this->_graph = new Graph(Grid, width, height, obstacleIdentifier);
@@ -20,6 +60,22 @@ bool PathPlanner::isInSet(list<int>* source, int target)
 	return false;
 }
 
+int PathPlanner::getMinFScoreVertex(list<int>* source, int* f_score)
+{
+	if (source->empty())
+	{
+		cout << "Super error empty set" << endl;
+		return -1;
+	}
+
+	int min = *(source->begin());
+	for (list<int>::iterator iter = source->begin(); iter != source->end(); ++iter) {
+		min = f_score[min] > f_score[*iter] ? *iter : min;
+	}
+
+	return min;
+}
+
 list<int> PathPlanner::reconstructPath(int* cameFrom, int startVertex)
 {
 	int currVertex = startVertex;
@@ -38,7 +94,7 @@ list<int> PathPlanner::AStar(int StartX, int StartY, int GoalX, int GoalY)
 {
 	int Start = this->_graph->indexToVertex(StartX, StartY),
 		Goal = 	this->_graph->indexToVertex(GoalX, GoalY);
-	int* g_score,* f_score, *cameFrom, lowestFScoreVrtx, currVertex;
+	int* g_score,* f_score, *cameFrom, currVertex;
 	g_score = new int [this->_graph->getVertexCount()];
 	f_score = new int [this->_graph->getVertexCount()];
 	cameFrom = new int [this->_graph->getVertexCount()];
@@ -55,21 +111,30 @@ list<int> PathPlanner::AStar(int StartX, int StartY, int GoalX, int GoalY)
 	openSet.push_back(Start);
 	g_score[Start] = 0;
 	f_score[Start] = g_score[Start] + this->heuristicCost(Start,Goal);
-	lowestFScoreVrtx = Start;
 
 	while (!openSet.empty())
 	{
 		int tentative_g_score;
-		currVertex = lowestFScoreVrtx;
+		currVertex = getMinFScoreVertex(&openSet, f_score);
 		openSet.remove(currVertex);
 		closedSet.push_front(currVertex);
+		cout << "Current Vertex : " << currVertex << endl;
+		if (currVertex == Goal)
+		{
+			list<int> pathToGoal = reconstructPath(cameFrom, Goal);
+			delete[] f_score;
+			delete[] g_score;
+			delete[] cameFrom;
 
-		if (currVertex == Goal) goto success;
+			return pathToGoal;
+		}
 
 		vector<int> adjacent = this->_graph->getAdjacent(currVertex);
-
+		cout << "Adjacent of " << currVertex << " : ";
+		printArray(&adjacent);
 		for (vector<int>::iterator adjVertex = adjacent.begin(); adjVertex != adjacent.end(); ++adjVertex)
 		{
+			cout << "Current Adjacent : " << *adjVertex << endl;
 			if (!this->isInSet(&closedSet, *adjVertex))
 			{
 				bool isAdjInOpenSet = this->isInSet(&openSet, *adjVertex);
@@ -84,8 +149,6 @@ list<int> PathPlanner::AStar(int StartX, int StartY, int GoalX, int GoalY)
 					if (!isAdjInOpenSet)
 					{
 						openSet.push_back(*adjVertex);
-						if (lowestFScoreVrtx > f_score[*adjVertex])
-							lowestFScoreVrtx = *adjVertex;
 					}
 				}
 			}
@@ -94,7 +157,6 @@ list<int> PathPlanner::AStar(int StartX, int StartY, int GoalX, int GoalY)
 
 	closedSet.clear();
 
-success:
 	delete[] g_score;
 	delete[] f_score;
 	delete[] cameFrom;

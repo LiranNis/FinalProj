@@ -30,6 +30,7 @@ public:
 	vector<unsigned char> GetInflatedMap();
 	vector<unsigned char> ImageToGrid(vector<unsigned char> Image);
 	void InitInflatedGrid();
+	int** getGrid();
 	virtual ~Map();
 };
 

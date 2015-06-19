@@ -376,8 +376,13 @@ void Map::InitInflatedGrid()
 	encodeOneStep("GridMap.png", GridImage, GridWidth, GridHeight);
 }
 
+int** Map::getGrid()
+{
+	return this->Grid;
+}
 
-Map::~Map() {
-	// TODO Auto-generated destructor stub
+
+Map::~Map()
+{
 }
 

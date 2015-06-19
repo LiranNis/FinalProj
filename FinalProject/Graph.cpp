@@ -1,5 +1,7 @@
 #include "Graph.h"
 
+#include <iostream> // For debug
+
 Graph::Graph(int** Grid, uint width, uint height, int obstacleIdentifier)
 {
 	this->_dimension = width * height;
@@ -33,7 +35,9 @@ Graph::Graph(int** Grid, uint width, uint height, int obstacleIdentifier)
 					if(	(this->isValidDir(x, y, currDir, width, height)) &&
 						(Grid[x + DIR[currDir][0]][y + DIR[currDir][1]] != obstacleIdentifier))
 					{
-						this->_matrix[x*y][currDir] = ((x + DIR[currDir][0]) * width) + (y + DIR[currDir][1]);
+						std::cout << "Matrix index : " << (x*width) + y << std::endl;
+						std::cout << "New Adjacent : [" << ((x + DIR[currDir][0]) * width) + (y + DIR[currDir][1]) <<  "] direct : " << currDir << std::endl;
+						this->_matrix[(x*width) + y][currDir] = ((x + DIR[currDir][0]) * width) + (y + DIR[currDir][1]);
 					}
 				}
 			}
@@ -49,6 +53,14 @@ Graph::Graph(int** Grid, uint width, uint height, int obstacleIdentifier)
 
 bool Graph::isValidDir(uint x, uint y, uint direction, uint width, uint height)
 {
+	if ((x + DIR[direction][0] >= 0) &&
+			(x + DIR[direction][0] < width) &&
+			(y + DIR[direction][1] >= 0) &&
+			(y + DIR[direction][1] < height))
+	{
+		std::cout << "Valid : [" << x + DIR[direction][0] << "]" << "[" << y + DIR[direction][1] << "]" << std::endl;
+	}
+
 	return (x + DIR[direction][0] >= 0) &&
 			(x + DIR[direction][0] < width) &&
 			(y + DIR[direction][1] >= 0) &&
@@ -57,11 +69,12 @@ bool Graph::isValidDir(uint x, uint y, uint direction, uint width, uint height)
 
 vector<int> Graph::getAdjacent(int vertex)
 {
-	vector<int> adj(this->MAX_ADJACENT);
+	vector<int> adj;
 
 	for (uint i = 0; i < this->MAX_ADJACENT; ++i)
 	{
-		adj[i] = this->_matrix[vertex][i];
+		if (this->_matrix[vertex][i] != EMPTY)
+			adj.push_back(this->_matrix[vertex][i]);
 	}
 
 	return adj;
@@ -86,4 +99,15 @@ int Graph::getManhattanDistance(int VSource, int VDest)
 {
 	return (abs((int)((VSource / this->_widthOrigin) - (VDest / this->_widthOrigin))) +
 			abs((int)((VSource % this->_widthOrigin) - (VDest % this->_widthOrigin))));
+}
+
+Graph::~Graph()
+{
+	for (unsigned int currVertex = 0; currVertex < this->_dimension; ++currVertex)
+	{
+		// Delete neighbors for each vertex
+		delete[] this->_matrix[currVertex];
+	}
+
+	delete[] this->_matrix;
 }

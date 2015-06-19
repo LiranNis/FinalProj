@@ -21,6 +21,7 @@ private:
 	int heuristicCost(int VStart, int VDest);
 	list<int> reconstructPath(int* cameFrom, int currVertex);
 	bool isInSet(list<int>* source, int target);
+	int getMinFScoreVertex(list<int>* source, int* f_score);
 
 public:
 	void pathPlannerInit(int** Grid, uint width, uint height, int obstacleIdentifier);
