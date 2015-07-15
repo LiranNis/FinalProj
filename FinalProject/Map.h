@@ -13,8 +13,6 @@
 #include "WriteToPng/pngUtil.h"
 #include "WriteToPng/lodepng.h"
 
-using namespace std;
-
 class Map
 {
 	string MapPath;
