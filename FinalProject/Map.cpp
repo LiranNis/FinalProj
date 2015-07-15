@@ -247,6 +247,9 @@ void Map::InitInflatedGrid()
 
 	std::vector<unsigned char> navImage; //the raw pixels
 	navImage.resize(width * height * 4);
+	this-> _mapWidth = width;
+	this-> _mapHeight = height;
+
 
 	for (y = 0; y < height; y++)
 	{
@@ -315,7 +318,7 @@ void Map::InitInflatedGrid()
 		}
 	}
 
-	int GridRatio = GridSize / CMInPixel;
+	int GridRatio =  this->_GridRatio = GridSize / CMInPixel;
 	int GridWidth = width / GridRatio + 1;
 	int GridHeight = height / GridRatio + 1;
 	cout << GridHeight << ":" << GridWidth << endl;
@@ -323,6 +326,8 @@ void Map::InitInflatedGrid()
 	// Vector for the grid PNG
 	std::vector<unsigned char> GridImage; //the raw pixels
 	GridImage.resize(GridWidth * GridHeight * 4);
+	this->gridHeight = GridHeight;
+	this->gridWidth = GridWidth;
 
 	// Init the grid map
 	Grid = (new int*[GridHeight]);
@@ -371,14 +376,51 @@ void Map::InitInflatedGrid()
 			}
 		}
 	}
-
+	this->_navImage = navImage;
 	encodeOneStep("InflatedMap.png", navImage, width, height);
 	encodeOneStep("GridMap.png", GridImage, GridWidth, GridHeight);
 }
 
-int** Map::getGrid()
+int** Map::getGrid(int* gridWidthOut, int* gridHeightOut)
 {
+	cout << "Map returns grid width : " << this->gridWidth << " height : " << this->gridHeight << endl;
+	*gridHeightOut = this->gridHeight;
+	*gridWidthOut = this->gridWidth;
 	return this->Grid;
+}
+
+
+void Map::Set_A_StarGridPointsOnMap(list<int> A_StarPathPointsOnGrid) // Bonus
+{
+	list<int>::iterator iter = A_StarPathPointsOnGrid.begin();
+	std::vector<unsigned char> navImage; //the raw pixels
+
+	navImage = this->_navImage; // Actually a pointer so if it importent then need to really copy the vector (init and byte by byte copy)
+
+	// Run on all over the A* Points and color them on the real Map
+	for (DWORD Grid_P_width,Grid_P_hight; iter != A_StarPathPointsOnGrid.end(); ++iter)
+	{
+		// Calculate the point (x,y)
+		Grid_P_width = (*iter % this->gridWidth)* this->_GridRatio; // x (<--->)
+		Grid_P_hight = (*iter / this->gridWidth)* this->_GridRatio; // y (/\ , \/)
+
+		// Color The points
+		for (DWORD nXRatio=0; nXRatio < this->_GridRatio/2 ; nXRatio++)
+		{
+			for (DWORD nYRatio=0; nYRatio < this->_GridRatio/2 ; nYRatio++)
+			{
+				DWORD nOffsetOnVector = (Grid_P_hight+nYRatio)* this->_mapWidth *4 + (Grid_P_width+nXRatio)*4;// *4 for the RGB.
+				*((DWORD*)((void*)&(navImage[nOffsetOnVector]))) = _MyMapColor;
+				/*navImage[nOffsetOnVector] = 0xAA;
+				navImage[nOffsetOnVector+1] = 0xAA;
+				navImage[nOffsetOnVector+2] = 0xAA;
+				navImage[nOffsetOnVector+3] = 0xAA;*/
+			}
+		}
+	}
+
+	// Save the Map
+	encodeOneStep("A_star_Map.png", navImage, this->_mapWidth, this->_mapHeight);
 }
 
 

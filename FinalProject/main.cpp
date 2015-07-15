@@ -8,7 +8,7 @@
 #include "Map.h"
 #include "PathPlanner.h"
 
-int main()
+int mainT()
 {
 
 	char* ParametersFilePath = "parameters.txt";

@@ -42,6 +42,7 @@ void printArray(vector<int> *array)
 
 void PathPlanner::pathPlannerInit(int** Grid, uint width, uint height, int obstacleIdentifier)
 {
+	cout << "grid width : " << width << " height : " << height << endl;
 	this->_graph = new Graph(Grid, width, height, obstacleIdentifier);
 }
 
