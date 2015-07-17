@@ -27,6 +27,7 @@ public:
 	int indexToVertex(int x, int y);
 	int getVertexCount();
 	int getManhattanDistance(int VSource, int VDest);
+	int getDotDistance(int VSource, int VDest);
 };
 
 #endif

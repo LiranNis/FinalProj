@@ -26,6 +26,7 @@ private:
 public:
 	void pathPlannerInit(int** Grid, uint width, uint height, int obstacleIdentifier);
 	list<int> AStar(int StartX, int StartY, int GoalX, int GoalY);
+	list<int> createWayPoints(list<int> completePath);
 
 };
 

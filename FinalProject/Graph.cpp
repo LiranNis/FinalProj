@@ -103,6 +103,15 @@ int Graph::getManhattanDistance(int VSource, int VDest)
 			abs((int)((VSource % this->_widthOrigin) - (VDest % this->_widthOrigin))));
 }
 
+int Graph::getDotDistance(int VSource, int VDest)
+{
+	return sqrt(
+	(((int)((VSource / this->_widthOrigin) - (VDest / this->_widthOrigin))) *
+	((int)((VSource / this->_widthOrigin) - (VDest / this->_widthOrigin)))) +
+	(((int)((VSource % this->_widthOrigin) - (VDest % this->_widthOrigin))) *
+			((int)((VSource % this->_widthOrigin) - (VDest % this->_widthOrigin)))));
+}
+
 Graph::~Graph()
 {
 	for (unsigned int currVertex = 0; currVertex < this->_dimension; ++currVertex)

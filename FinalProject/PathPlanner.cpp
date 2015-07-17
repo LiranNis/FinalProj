@@ -48,7 +48,7 @@ void PathPlanner::pathPlannerInit(int** Grid, uint width, uint height, int obsta
 
 int PathPlanner::heuristicCost(int VStart, int VDest)
 {
-	return this->_graph->getManhattanDistance(VStart, VDest);
+	return this->_graph->getDotDistance(VStart, VDest);
 }
 
 bool PathPlanner::isInSet(list<int>* source, int target)
@@ -163,4 +163,27 @@ list<int> PathPlanner::AStar(int StartX, int StartY, int GoalX, int GoalY)
 	delete[] cameFrom;
 
 	return closedSet;
+}
+
+list<int> PathPlanner::createWayPoints(list<int> completePath)
+{
+	unsigned int 	i = 0,
+					j = 0,
+					pathLength = completePath.size();
+	const unsigned int SOFT_FACTOR = 9;
+	list<int> waypoints;
+	list<int>::iterator iter = completePath.begin();
+
+	if (pathLength > 2)
+	{
+		for (; i < completePath.size() - 1; i+=SOFT_FACTOR)
+		{
+			waypoints.push_back(*(iter));
+			for (j = 0; j < SOFT_FACTOR && iter != completePath.end(); ++j, ++iter);
+		}
+
+		waypoints.push_back(*completePath.rbegin());
+	}
+
+	return waypoints;
 }

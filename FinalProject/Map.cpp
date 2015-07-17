@@ -423,6 +423,11 @@ void Map::Set_A_StarGridPointsOnMap(list<int> A_StarPathPointsOnGrid) // Bonus
 	encodeOneStep("A_star_Map.png", navImage, this->_mapWidth, this->_mapHeight);
 }
 
+void Map::imagePointToGridPoint(int* pointX, int* pointY)
+{
+	*pointX = ((*pointX) / this->_GridRatio) + 1;
+	*pointY = ((*pointY) / this->_GridRatio) + 1;
+}
 
 Map::~Map()
 {
