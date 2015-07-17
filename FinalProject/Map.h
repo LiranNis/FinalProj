@@ -17,8 +17,6 @@
 #define DWORD unsigned int
 
 
-using namespace std;
-
 class Map
 {
 	// TODO: CMInPixel, GridSize from file...!!!
@@ -45,6 +43,7 @@ public:
 	void InitInflatedGrid();
 	int** getGrid(int* gridWidthOut, int* gridHeightOut);
 	void Set_A_StarGridPointsOnMap(list<int> A_StarPathPointsOnGrid);
+	void imagePointToGridPoint(int* pointX, int* pointY);
 	virtual ~Map();
 };
 
