@@ -185,7 +185,7 @@ void LocalizationManager::duplicateSignificant()
 	Particle sigPar(x, y, belief);
 	this->addParticles(sigPar.duplicate(this->_height, this->_width));
 }
-
+// Modified
 //------------------------------------------------------------------
 //-----------------------DEBUG SECTION------------------------------
 //------------------------------------------------------------------
