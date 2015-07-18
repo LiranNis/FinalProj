@@ -15,8 +15,8 @@ Manager::Manager(Robot* robot, Plan* plan)
 	_config = new ConfigurationManager(ParametersFilePath);
 	_robot->SetLocation(_config->getStartX(), _config->getStartY(), _config->getStartYaw());
 	_map = new Map(_config->getMapPath(),
-			           ((_config->getRobotWidth() / _config->getCmInPixel()) / 2) + 1,
-			           _config->getGridSize() / _config->getCmInPixel());
+			       ((_config->getRobotWidth() / _config->getCmInPixel()) / 2) + 1,
+			       _config->getGridSize() / _config->getCmInPixel());
 
 	_curr = plan->GetStartPoint();
 }
@@ -30,16 +30,15 @@ void Manager::run()
 		StartY = _config->getStartY(),
 		GoalX = _config->getGoalX(),
 		GoalY = _config->getGoalY();
+	//cout << StartX << " " << StartY << " " << GoalX << " " << GoalY << " ";
 
 	PathPlanner Planner;
-
 	int** ppnGrid = _map->getGrid(&GridWidth, &GridHeight);
-
 	Planner.pathPlannerInit(ppnGrid, GridWidth, GridHeight, 1);
 	_map->imagePointToGridPoint(&StartX, &StartY);
 	_map->imagePointToGridPoint(&GoalX, &GoalY);
+	cout << StartX << " " << StartY << " " << GoalX << " " << GoalY << " ";
 	list<int> result  = Planner.AStar(StartX, StartY, GoalX, GoalY);
-
 
 	if (result.empty())
 	{
@@ -51,14 +50,18 @@ void Manager::run()
 	_map->Set_A_StarGridPointsOnMap(Planner.createWayPoints(result));
 
 	list<int> WayPoints = Planner.createWayPoints(result);
+
 	list<int>::iterator iter = WayPoints.begin();
+
+
 
 	// Run on all over the A* Points and color them on the real Map
 	for (DWORD GridCurrentWidth,GridCurrentHeight; iter != WayPoints.end(); ++iter)
 	{
+		std::cout << "X:" << _robot->getX() << ", Y:" << _robot->getY() << ", Yaw:" << _robot->getYaw() << std::endl;
 		// Calculate the point (x,y)
-		GridCurrentWidth = (*iter % GridWidth)* _map->getGridRatio(); // x (<--->)
-		GridCurrentHeight = (*iter / GridWidth)* _map->getGridRatio(); // y (/\ , \/)
+		GridCurrentWidth = (*iter % GridWidth)* _map->getGridRatio();
+		GridCurrentHeight = (*iter / GridWidth)* _map->getGridRatio();
 
 		_robot->SetNextWayPoint(GridCurrentWidth, GridCurrentHeight);
 

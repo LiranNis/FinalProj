@@ -28,12 +28,12 @@ void closedDelR(int v)
 void printArray(vector<int> *array)
 {
 	vector<int>::iterator iter = array->begin();
-	cout << "{";
+	//cout << "{";
 	for (; iter != array->end(); ++iter) {
-		cout << " " << *iter << endl;
+	//	cout << " " << *iter << endl;
 
 	}
-	cout << "}";
+	//cout << "}";
 }
 //*************************************************************************
 // DEBUG SECTION END
@@ -119,7 +119,7 @@ list<int> PathPlanner::AStar(int StartX, int StartY, int GoalX, int GoalY)
 		currVertex = getMinFScoreVertex(&openSet, f_score);
 		openSet.remove(currVertex);
 		closedSet.push_front(currVertex);
-		cout << "Current Vertex : " << currVertex << endl;
+		//cout << "Current Vertex : " << currVertex << endl;
 		if (currVertex == Goal)
 		{
 			list<int> pathToGoal = reconstructPath(cameFrom, Goal);
@@ -131,11 +131,11 @@ list<int> PathPlanner::AStar(int StartX, int StartY, int GoalX, int GoalY)
 		}
 
 		vector<int> adjacent = this->_graph->getAdjacent(currVertex);
-		cout << "Adjacent of " << currVertex << " : ";
+		//cout << "Adjacent of " << currVertex << " : ";
 		printArray(&adjacent);
 		for (vector<int>::iterator adjVertex = adjacent.begin(); adjVertex != adjacent.end(); ++adjVertex)
 		{
-			cout << "Current Adjacent : " << *adjVertex << endl;
+			//cout << "Current Adjacent : " << *adjVertex << endl;
 			if (!this->isInSet(&closedSet, *adjVertex))
 			{
 				bool isAdjInOpenSet = this->isInSet(&openSet, *adjVertex);

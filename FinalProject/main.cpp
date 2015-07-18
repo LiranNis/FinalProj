@@ -13,7 +13,7 @@ int main()
 {
 	Robot robot("localhost",6665);
 	PlanMoveToDest plnMTD(&robot);
-	Manager manager(&robot, &plnMTD);
-	manager.run();
+	Manager* manager = new Manager(&robot, &plnMTD);
+	manager->run();
 	return 0;
 }

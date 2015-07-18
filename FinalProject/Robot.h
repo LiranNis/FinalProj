@@ -10,6 +10,7 @@
 
 #include <libplayerc++/playerc++.h>
 #include <math.h>
+#include <unistd.h>
 
 using namespace PlayerCc;
 
@@ -33,6 +34,18 @@ public:
 	bool ArrivedToWayPoint();
 	bool IsDirectedToWayPoint();
 	virtual ~Robot();
+
+	double getX() const {
+		return _x;
+	}
+
+	double getY() const {
+		return _y;
+	}
+
+	double getYaw() const {
+		return _yaw;
+	}
 };
 
 #endif /* ROBOT_H_ */

@@ -10,6 +10,7 @@
 Map::Map(string mapPath, unsigned int InflateNumber, int GridRatio)
 {
 	MapPath = mapPath;
+	_GridRatio = GridRatio;
 	InitInflatedGrid(InflateNumber, GridRatio);
 }
 

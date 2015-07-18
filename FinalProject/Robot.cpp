@@ -14,9 +14,12 @@ Robot::Robot(char* ip, int port)
 	_lp = new LaserProxy(_pc);
 
 	_pp->SetMotorEnable(true);
+
 	//For fixing Player's reading BUG
 	for(int i=0;i<15;i++)
+	{
 		Read();
+	}
 }
 
 double Robot::RadianToDegree(double Radian)
@@ -32,12 +35,13 @@ double Robot::DegreeToRadian(double Degree)
 void Robot::Read()
 {
 	_pc->Read();
-	std::cout << "X:" << _pp->GetXPos() << ", Y:" << _pp->GetYPos() << ", Yaw:" << _pp->GetYaw() << std::endl;
 }
 
 void Robot::SetSpeed(float xSpeed, float AngularSpeed)
 {
 	_pp->SetSpeed(xSpeed, AngularSpeed);
+	sleep(100);
+
 }
 
 void Robot::SetNextWayPoint(unsigned int NextWayPointWidth,unsigned int NextWayPointHeight)
