@@ -390,7 +390,7 @@ int** Map::getGrid(int* gridWidthOut, int* gridHeightOut)
 }
 
 
-void Map::Set_A_StarGridPointsOnMap(list<int> A_StarPathPointsOnGrid) // Bonus
+void Map::Set_A_StarGridPointsOnMap(list<int> A_StarPathPointsOnGrid, char* filename) // Bonus
 {
 	list<int>::iterator iter = A_StarPathPointsOnGrid.begin();
 	std::vector<unsigned char> navImage; //the raw pixels
@@ -420,7 +420,7 @@ void Map::Set_A_StarGridPointsOnMap(list<int> A_StarPathPointsOnGrid) // Bonus
 	}
 
 	// Save the Map
-	encodeOneStep("A_star_Map.png", navImage, this->_mapWidth, this->_mapHeight);
+	encodeOneStep(filename, navImage, this->_mapWidth, this->_mapHeight);
 }
 
 void Map::imagePointToGridPoint(int* pointX, int* pointY)
@@ -431,5 +431,15 @@ void Map::imagePointToGridPoint(int* pointX, int* pointY)
 
 Map::~Map()
 {
+	int j;
+
+	for (j = 0; j < this->gridHeight; ++j)
+	{
+		delete [] (this->Grid[j]);
+	}
+
+	delete[](this->Grid);
+
+	std::cout << "Map destroyed" << std::endl;
 }
 

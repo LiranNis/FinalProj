@@ -42,7 +42,7 @@ public:
 	vector<unsigned char> ImageToGrid(vector<unsigned char> Image);
 	void InitInflatedGrid();
 	int** getGrid(int* gridWidthOut, int* gridHeightOut);
-	void Set_A_StarGridPointsOnMap(list<int> A_StarPathPointsOnGrid);
+	void Set_A_StarGridPointsOnMap(list<int> A_StarPathPointsOnGrid, char* filename);
 	void imagePointToGridPoint(int* pointX, int* pointY);
 	virtual ~Map();
 };
