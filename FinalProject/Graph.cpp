@@ -26,7 +26,7 @@ Graph::Graph(int** Grid, uint width, uint height, int obstacleIdentifier)
 		{
 			for (unsigned int y = 0; y < width; ++y)
 			{
-				cout << " accessing index: [" << x << "] [ " << y << "]" << endl;
+				//cout << " accessing index: [" << x << "] [ " << y << "]" << endl;
 				// Place that can't be reached, thus can't lead anywhere
 				if (Grid[x][y] == obstacleIdentifier)
 					continue;
@@ -50,7 +50,7 @@ Graph::Graph(int** Grid, uint width, uint height, int obstacleIdentifier)
 			this->_vertexes[v] = v;
 		}
 	}
-	cout << " width origin : " << width << endl;
+	//cout << " width origin : " << width << endl;
 }
 
 bool Graph::isValidDir(uint x, uint y, uint direction, uint width, uint height)

@@ -7,8 +7,6 @@
 
 #ifndef MAP_H_
 #define MAP_H_
-#include <fstream>
-#include <stdlib.h>
 #include <list>
 
 #include "WriteToPng/pngUtil.h"
@@ -19,13 +17,7 @@
 
 class Map
 {
-	// TODO: CMInPixel, GridSize from file...!!!
 	string MapPath;
-	double StartX, StartY, StartYaw;
-	double GoalX, GoalY;
-	double RobotWidth, RobotHeight;
-	double CMInPixel = 2.5; // Pixels in CM
-	double GridSize = 10; // Grid CM
 	int** Grid;
 	int gridHeight,
 		gridWidth,
@@ -37,14 +29,18 @@ class Map
 
 public:
 	vector<unsigned char> _navImage; // vector of inflated map -> will be drowen and be saved
-	Map(char* ParametersFilePath);
-	vector<unsigned char> GetInflatedMap();
+	Map(string mapPath, unsigned int InflateNumber, int GridRatio);
+	vector<unsigned char> GetInflatedMap(unsigned int InflateNumber);
 	vector<unsigned char> ImageToGrid(vector<unsigned char> Image);
-	void InitInflatedGrid();
+	void InitInflatedGrid(unsigned int InflateNumber, int GridRatio);
 	int** getGrid(int* gridWidthOut, int* gridHeightOut);
 	void Set_A_StarGridPointsOnMap(list<int> A_StarPathPointsOnGrid, char* filename);
 	void imagePointToGridPoint(int* pointX, int* pointY);
 	virtual ~Map();
+
+	int getGridRatio() const {
+		return _GridRatio;
+	}
 };
 
 #endif /* MAP_H_ */
