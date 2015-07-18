@@ -19,9 +19,20 @@ Robot::Robot(char* ip, int port)
 		Read();
 }
 
+double Robot::RadianToDegree(double Radian)
+{
+	return (Radian * (180 / M_PI));
+}
+
+double Robot::DegreeToRadian(double Degree)
+{
+	return (Degree * (M_PI / 180));
+}
+
 void Robot::Read()
 {
 	_pc->Read();
+	std::cout << "X:" << _pp->GetXPos() << ", Y:" << _pp->GetYPos() << ", Yaw:" << _pp->GetYaw() << std::endl;
 }
 
 void Robot::SetSpeed(float xSpeed, float AngularSpeed)
@@ -29,9 +40,29 @@ void Robot::SetSpeed(float xSpeed, float AngularSpeed)
 	_pp->SetSpeed(xSpeed, AngularSpeed);
 }
 
+void Robot::SetNextWayPoint(unsigned int NextWayPointWidth,unsigned int NextWayPointHeight)
+{
+	_NextWayPointHeight = NextWayPointHeight;
+	_NextWayPointWidth = NextWayPointWidth;
+}
+
+void Robot::SetLocation(double x, double y, double yaw)
+{
+	_x = x;
+	_y = y;
+	_yaw = yaw;
+
+	_pp->SetOdometry(0, 0, DegreeToRadian(yaw));
+}
+
 bool Robot::IsDirectedToWayPoint()
 {
 	return true;
+}
+
+bool Robot::ArrivedToWayPoint()
+{
+
 }
 
 Robot::~Robot()

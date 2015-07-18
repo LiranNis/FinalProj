@@ -5,13 +5,15 @@
  *      Author: colman
  */
 
-#include "Map.h"
-#include "PathPlanner.h"
+#include "Robot.h"
+#include "Manager.h"
+#include "Plans/PlanMoveToDest.h"
 
 int main()
 {
-
-	char* ParametersFilePath = "parameters.txt";
-	Map *map = new Map(ParametersFilePath);
+	Robot robot("localhost",6665);
+	PlanMoveToDest plnMTD(&robot);
+	Manager manager(&robot, &plnMTD);
+	manager.run();
 	return 0;
 }
