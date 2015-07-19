@@ -13,7 +13,7 @@ MoveForward::MoveForward(Robot* robot):Behavior(robot)
 
 bool MoveForward::StartCond()
 {
-	if (_robot->IsDirectedToWayPoint())
+	if (!_robot->ArrivedToWayPoint())
 	{
 		return true;
 	}
@@ -25,8 +25,9 @@ bool MoveForward::StartCond()
 
 bool MoveForward::StopCond()
 {
-	if (!_robot->IsDirectedToWayPoint())
+	if (_robot->ArrivedToWayPoint())
 	{
+		std::cout << "stop";
 		return true;
 	}
 	else
@@ -37,7 +38,14 @@ bool MoveForward::StopCond()
 
 void MoveForward::Action()
 {
-	_robot->SetSpeed(0.2, 0);
+	int SleepTime = 100;
+	double Speed = 0.2;
+	_robot->SetSpeed(Speed, 0);
+	usleep(SleepTime * 1000);
+	_robot->setX(_robot->getX() + Speed * 100 * ((double)SleepTime / 1000) * cos(_robot->getYaw()));
+	_robot->setY(_robot->getY() - Speed * 100 * ((double)SleepTime / 1000) * sin(_robot->getYaw()));
+
+	std::cout<<"Action:Move"<<std::endl;
 }
 
 MoveForward::~MoveForward() {

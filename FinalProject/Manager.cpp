@@ -38,7 +38,7 @@ void Manager::run()
 	_map->imagePointToGridPoint(&StartX, &StartY);
 	_map->imagePointToGridPoint(&GoalX, &GoalY);
 	cout << StartX << " " << StartY << " " << GoalX << " " << GoalY << " ";
-	list<int> result  = Planner.AStar(StartX, StartY, GoalX, GoalY);
+	list<int> result  = Planner.AStar(StartY, StartX, GoalY, GoalX);
 
 	if (result.empty())
 	{
@@ -47,42 +47,51 @@ void Manager::run()
 		result.push_back(GoalX * GridWidth + GoalY);
 	}
 
-	_map->Set_A_StarGridPointsOnMap(Planner.createWayPoints(result));
+	_map->Set_A_StarGridPointsOnMap(Planner.createWayPoints(result), "A_STAR.png");
 
 	list<int> WayPoints = Planner.createWayPoints(result);
 
-	list<int>::iterator iter = WayPoints.begin();
-
-
+	list<int>::iterator iter = WayPoints.end();
+	--iter;
+	--iter;
 
 	// Run on all over the A* Points and color them on the real Map
-	for (DWORD GridCurrentWidth,GridCurrentHeight; iter != WayPoints.end(); ++iter)
+	for (DWORD GridCurrentWidth,GridCurrentHeight; iter != WayPoints.begin(); --iter)
 	{
 		std::cout << "X:" << _robot->getX() << ", Y:" << _robot->getY() << ", Yaw:" << _robot->getYaw() << std::endl;
 		// Calculate the point (x,y)
 		GridCurrentWidth = (*iter % GridWidth)* _map->getGridRatio();
 		GridCurrentHeight = (*iter / GridWidth)* _map->getGridRatio();
+		std::cout << "WayPointX " << GridCurrentWidth << " WayPointY " << GridCurrentHeight << std::endl;
 
 		_robot->SetNextWayPoint(GridCurrentWidth, GridCurrentHeight);
 
 		if (!(_curr->StartCond()))
 		{
+			cout << "Problem with start condition";
 			return;
 		}
 
 		while (_curr != NULL)
 		{
+			cout << "thats why";
 			while (!(_curr->StopCond()))
 			{
 				_curr->Action();
 				_robot->Read();
+				cout << "here";
 			}
+
+			cout << "Stop Condition" << endl;
 
 			_curr = _curr->SelectNext();
 			_robot->Read();
+
 		}
 
 	}
+
+	cout << "END" <<endl;
 }
 
 Manager::~Manager()

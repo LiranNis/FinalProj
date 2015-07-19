@@ -19,7 +19,7 @@ void Behavior::AddBeh(Behavior* next)
 
 Behavior* Behavior::SelectNext()
 {
-	return NULL;
+	return _behVect.begin()[0];
 }
 
 Behavior::~Behavior()

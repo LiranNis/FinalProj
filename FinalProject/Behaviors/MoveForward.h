@@ -9,6 +9,7 @@
 #define MOVEFORWARD_H_
 
 #include "Behavior.h"
+#include <math.h>
 
 class MoveForward : public Behavior
 {
