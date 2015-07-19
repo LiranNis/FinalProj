@@ -18,6 +18,7 @@ class Manager {
 	Behavior* _curr;
 	Robot* _robot;
 	Map* _map;
+	Plan* _plan;
 	ConfigurationManager* _config;
 
 public:

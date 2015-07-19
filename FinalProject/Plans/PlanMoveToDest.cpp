@@ -15,7 +15,7 @@ PlanMoveToDest::PlanMoveToDest(Robot* robot):Plan(robot)
 
 	// Connecting Behaviors
 	_beh[0]->AddBeh(_beh[1]);
-	_beh[1]->AddBeh(_beh[0]);
+	_beh[1]->AddBeh(NULL);
 
 	// Set the start behavior
 	_start = _beh[0];

@@ -18,7 +18,7 @@ Manager::Manager(Robot* robot, Plan* plan)
 			       ((_config->getRobotWidth() / _config->getCmInPixel()) / 2) + 1,
 			       _config->getGridSize() / _config->getCmInPixel());
 
-	_curr = plan->GetStartPoint();
+	_plan = plan;
 }
 
 void Manager::run()
@@ -56,7 +56,7 @@ void Manager::run()
 	--iter;
 
 	// Run on all over the A* Points and color them on the real Map
-	for (DWORD GridCurrentWidth,GridCurrentHeight; iter != WayPoints.begin(); --iter)
+	for (DWORD GridCurrentWidth,GridCurrentHeight; iter != WayPoints.begin(); iter--)
 	{
 		std::cout << "X:" << _robot->getX() << ", Y:" << _robot->getY() << ", Yaw:" << _robot->getYaw() << std::endl;
 		// Calculate the point (x,y)
@@ -66,11 +66,13 @@ void Manager::run()
 
 		_robot->SetNextWayPoint(GridCurrentWidth, GridCurrentHeight);
 
-		if (!(_curr->StartCond()))
+		_curr = _plan->GetStartPoint();
+
+		/*if (!(_curr->StartCond()))
 		{
 			cout << "Problem with start condition";
 			return;
-		}
+		}*/
 
 		while (_curr != NULL)
 		{

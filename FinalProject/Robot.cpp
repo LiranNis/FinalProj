@@ -63,7 +63,7 @@ bool Robot::IsDirectedToWayPoint()
 	//Radian = Radian < 0 ? M_PI + Radian : Radian;
 	Radian = M_PI - Radian;
 	//std::cout << _yaw;
-	if (Radian - _yaw < AngularTolerance)
+	if (((Radian - _yaw)<0?_yaw-Radian:Radian-_yaw) < AngularTolerance)
 	{
 
 		std::cout<< Radian << std::endl;

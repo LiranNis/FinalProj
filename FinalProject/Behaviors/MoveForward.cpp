@@ -38,8 +38,8 @@ bool MoveForward::StopCond()
 
 void MoveForward::Action()
 {
-	int SleepTime = 100;
-	double Speed = 0.2;
+	float SleepTime = 12.4;
+	double Speed = 0.1;
 	_robot->SetSpeed(Speed, 0);
 	usleep(SleepTime * 1000);
 	_robot->setX(_robot->getX() + Speed * 100 * ((double)SleepTime / 1000) * cos(_robot->getYaw()));

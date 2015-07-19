@@ -20,7 +20,7 @@ class Robot
 	Position2dProxy* _pp;
 	LaserProxy* _lp;
 	double _x, _y, _yaw;
-	const double Tolerance = 0.5;
+	const double Tolerance = 2;
 	const double AngularTolerance = 0.02;
 	unsigned int _NextWayPointWidth, _NextWayPointHeight;
 
@@ -57,7 +57,21 @@ public:
 	}
 
 	void setYaw(double yaw) {
-		_yaw = yaw > M_PI * 2 ? yaw - M_PI * 2 : yaw;
+		if (yaw > M_PI * 2)
+		{
+			_yaw = yaw - M_PI * 2;
+		}
+		else
+		{
+			if (yaw < 0)
+			{
+				_yaw = yaw + M_PI * 2;
+			}
+			else
+			{
+				_yaw = yaw;
+			}
+		}
 	}
 };
 
