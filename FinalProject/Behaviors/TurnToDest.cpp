@@ -42,7 +42,7 @@ void TurnToDest::Action()
 	_robot->SetSpeed(0, Speed);
 	usleep(SleepTime * 1000);
 	_robot->setYaw(_robot->getYaw() + Speed * ((double)SleepTime / 1000.00));
-	//std::cout<<"Action:Turn"<<std::endl;
+	std::cout<<"Action:Turn"<<std::endl;
 }
 
 TurnToDest::~TurnToDest()

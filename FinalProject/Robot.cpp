@@ -71,7 +71,7 @@ bool Robot::IsDirectedToWayPoint()
 	}
 	else
 	{
-		std::cout<< atan2(_y - _NextWayPointHeight, _x - _NextWayPointWidth) << " " << _yaw << std::endl;
+		//std::cout<< atan2(_y - _NextWayPointHeight, _x - _NextWayPointWidth) << " " << _yaw << std::endl;
 		return false;
 	}
 }
@@ -80,14 +80,14 @@ bool Robot::ArrivedToWayPoint()
 {
 	if (sqrt(pow(_x - _NextWayPointWidth, 2) + pow(_y - _NextWayPointHeight, 2)) < Tolerance)
 	{
-		std::cout << "nextX:" << _NextWayPointWidth << " X:" << _x << " nextY:" << _NextWayPointHeight << " Y:" << _y;
-		std::cout << sqrt(pow(_x - _NextWayPointWidth, 2) + pow(_y - _NextWayPointHeight, 2));
+		//std::cout << "nextX:" << _NextWayPointWidth << " X:" << _x << " nextY:" << _NextWayPointHeight << " Y:" << _y;
+		//std::cout << sqrt(pow(_x - _NextWayPointWidth, 2) + pow(_y - _NextWayPointHeight, 2));
 		return true;
 	}
 	else
 	{
-		std::cout << "nextX:" << _NextWayPointWidth << " X:" << _x << " nextY:" << _NextWayPointHeight << " Y:" << _y;
-		std::cout << sqrt(pow(_x - _NextWayPointWidth, 2) + pow(_y - _NextWayPointHeight, 2));
+		//std::cout << "nextX:" << _NextWayPointWidth << " X:" << _x << " nextY:" << _NextWayPointHeight << " Y:" << _y;
+		//std::cout << sqrt(pow(_x - _NextWayPointWidth, 2) + pow(_y - _NextWayPointHeight, 2));
 		return false;
 	}
 }

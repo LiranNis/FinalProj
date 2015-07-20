@@ -38,7 +38,7 @@ bool MoveForward::StopCond()
 
 void MoveForward::Action()
 {
-	double SleepTime = 9.7;
+	double SleepTime = 12;
 	// < 10
 	// > 9.6
 	// > 9.5

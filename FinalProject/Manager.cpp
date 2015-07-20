@@ -57,11 +57,11 @@ void Manager::run()
 	// Run on all over the A* Points and color them on the real Map
 	for (DWORD GridCurrentWidth,GridCurrentHeight, i = 0; i < WayPoints.size(); --iter, i++)
 	{
-		std::cout << "X:" << _robot->getX() << ", Y:" << _robot->getY() << ", Yaw:" << _robot->getYaw() << std::endl;
+		//std::cout << "X:" << _robot->getX() << ", Y:" << _robot->getY() << ", Yaw:" << _robot->getYaw() << std::endl;
 		// Calculate the point (x,y)
 		GridCurrentWidth = (*iter % GridWidth)* _map->getGridRatio();
 		GridCurrentHeight = (*iter / GridWidth)* _map->getGridRatio();
-		std::cout << "WayPointX " << GridCurrentWidth << " WayPointY " << GridCurrentHeight << std::endl;
+		//std::cout << "WayPointX " << GridCurrentWidth << " WayPointY " << GridCurrentHeight << std::endl;
 
 		_robot->SetNextWayPoint(GridCurrentWidth, GridCurrentHeight);
 
@@ -75,15 +75,15 @@ void Manager::run()
 
 		while (_curr != NULL)
 		{
-			cout << "thats why";
+			//cout << "thats why";
 			while (!(_curr->StopCond()))
 			{
+				cout << "Robot (x,y,yaw) : " << "(" << _robot->getX() << "," << _robot->getY() << "," << _robot->getYaw() << ") ";
 				_curr->Action();
 				_robot->Read();
-				cout << "here";
 			}
 
-			cout << "Stop Condition" << endl;
+			//cout << "Stop Condition" << endl;
 
 			_curr = _curr->SelectNext();
 			_robot->Read();
