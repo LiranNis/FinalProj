@@ -53,10 +53,9 @@ void Manager::run()
 
 	list<int>::iterator iter = WayPoints.end();
 	--iter;
-	--iter;
 
 	// Run on all over the A* Points and color them on the real Map
-	for (DWORD GridCurrentWidth,GridCurrentHeight; iter != WayPoints.begin(); iter--)
+	for (DWORD GridCurrentWidth,GridCurrentHeight, i = 0; i < WayPoints.size(); --iter, i++)
 	{
 		std::cout << "X:" << _robot->getX() << ", Y:" << _robot->getY() << ", Yaw:" << _robot->getYaw() << std::endl;
 		// Calculate the point (x,y)
@@ -68,11 +67,11 @@ void Manager::run()
 
 		_curr = _plan->GetStartPoint();
 
-		/*if (!(_curr->StartCond()))
+		if (!(_curr->StartCond()))
 		{
 			cout << "Problem with start condition";
 			return;
-		}*/
+		}
 
 		while (_curr != NULL)
 		{

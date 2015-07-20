@@ -38,7 +38,7 @@ bool TurnToDest::StopCond()
 void TurnToDest::Action()
 {
 	int SleepTime = 100;
-	double Speed = -0.4;
+	double Speed = 0.4;
 	_robot->SetSpeed(0, Speed);
 	usleep(SleepTime * 1000);
 	_robot->setYaw(_robot->getYaw() + Speed * ((double)SleepTime / 1000.00));

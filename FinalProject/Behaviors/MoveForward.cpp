@@ -38,7 +38,10 @@ bool MoveForward::StopCond()
 
 void MoveForward::Action()
 {
-	float SleepTime = 12.4;
+	double SleepTime = 9.7;
+	// < 10
+	// > 9.6
+	// > 9.5
 	double Speed = 0.1;
 	_robot->SetSpeed(Speed, 0);
 	usleep(SleepTime * 1000);
